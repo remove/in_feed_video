@@ -10,7 +10,7 @@ class FeedVideosController {
 
   void onItemExposed(Set<int> indexes) {
     final firstExposedIndex = indexes.reduce(min);
-    // 暂停除目标播放器以为的全部播放器
+    // 暂停除目标播放器外的全部播放器
     for (int i = 0; i < players.length; i++) {
       final player = players[i];
       if (i != firstExposedIndex && player.playerController.value.isPlaying) {

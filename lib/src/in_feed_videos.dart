@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import 'feed_video_controller.dart';
 import 'feed_video_observe.dart';
 import 'feed_video_state_provider.dart';
 import 'feed_videos_state_container.dart';
@@ -41,7 +40,6 @@ class _InFeedVideosState extends State<InFeedVideos> {
     return FeedVideosContainerProvider(
       container: container,
       child: FeedVideosObserver(
-        controller: FeedVideosController(players: widget.proxyControllers),
         child: widget.child,
       ),
     );

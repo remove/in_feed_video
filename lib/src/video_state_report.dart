@@ -11,10 +11,9 @@ import 'feed_videos_state_container.dart';
 import 'video_proxy_controller.dart';
 
 /// Item曝光上报
-/// 接收[ListViewScrollOffsetPublish.offsetStream]并计算Item自身曝光后上报给
-/// [ListViewVideoStateProvider.exposedPlayerIndex]后，通知由[VideoObserver]监听
-/// 的[ListViewVideoStateProvider.acceptAction]接收到事件后调用
-/// [ListViewVideoController]进行播放器控制
+/// 接收[FeedVideosStateContainer.offsetPublishStream]并计算Item自身曝光后上报至
+/// [FeedVideosStateContainer.acceptExposedAction]由[FeedVideosObserver]监听
+/// 此控件生命周期管理[VideoProxyController]初始化与销毁
 class VideoExposedReport extends StatefulWidget {
   const VideoExposedReport({
     Key? key,
@@ -42,9 +41,11 @@ class _VideoExposedReportState extends State<VideoExposedReport> {
   @override
   void didChangeDependencies() {
     container = FeedVideosContainerProvider.of(context);
+    // 接收列表Offset，防抖后计算曝光
     offsetStream = container.offsetPublishStream
         .debounceTime(const Duration(milliseconds: 250))
         .listen((offset) => calculationExposed(offset));
+    // 初始化代理视频控制器
     proxyController.init();
     super.didChangeDependencies();
   }
@@ -97,6 +98,7 @@ class _VideoExposedReportState extends State<VideoExposedReport> {
   }
 
   void onExposed() {
+    // 曝光时上报到队列由[FeedVideosController]消费
     container.acceptExposedAction.add(widget.index);
   }
 
