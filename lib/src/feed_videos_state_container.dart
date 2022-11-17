@@ -13,9 +13,6 @@ class FeedVideosStateContainer {
 
   final double exposeFactor;
 
-  /// 曝光Item列表
-  final Set<int> exposedPlayerIndex = {};
-
   /// item曝光事件流
   final PublishSubject<int> acceptExposedAction = PublishSubject();
 

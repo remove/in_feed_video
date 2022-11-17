@@ -27,12 +27,14 @@ class _FeedVideosObserverState extends State<FeedVideosObserver> {
   void didChangeDependencies() {
     container = FeedVideosContainerProvider.of(context);
     //接收曝光事件，防抖处理后调用[FeedVideosController]处理
-    container.acceptExposedAction.debounceTime(container.debounceTime).listen(
-      (value) {
-        final indexes = container.exposedPlayerIndex;
+    container.acceptExposedAction
+        .bufferTime(container.debounceTime)
+        .where((event) => event.isNotEmpty)
+        .listen(
+      (event) {
+        final indexes = event.toSet();
         if (indexes.isNotEmpty) {
           widget.controller.onItemExposed(indexes);
-
           // 消费曝光的Item后清空
           indexes.clear();
         }

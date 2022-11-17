@@ -97,9 +97,7 @@ class _VideoExposedReportState extends State<VideoExposedReport> {
   }
 
   void onExposed() {
-    container
-      ..exposedPlayerIndex.add(widget.index)
-      ..acceptExposedAction.add(widget.index);
+    container.acceptExposedAction.add(widget.index);
   }
 
   void onDismiss() {}
