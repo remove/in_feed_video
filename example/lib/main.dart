@@ -59,12 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 VideoExposedReport(
                   index: index,
-                  child: Stack(
-                    children: [
-                      AeroBox(controller: proxyControllers[index]),
-                      Text(index.toString()),
-                    ],
-                  ),
+                  builder: (context, proxyController) {
+                    return Stack(
+                      children: [
+                        AeroBox(controller: proxyController),
+                        Text(index.toString()),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 100),
               ],
@@ -92,6 +94,7 @@ class _AeroBoxState extends State<AeroBox> {
 
   @override
   void initState() {
+    widget.controller.init();
     playerController.addListener(() {
       if (playerController.value.isInitialized != playerInitialized) {
         playerInitialized = playerController.value.isInitialized;
@@ -99,6 +102,12 @@ class _AeroBoxState extends State<AeroBox> {
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
   }
 
   @override

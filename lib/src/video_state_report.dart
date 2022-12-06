@@ -10,6 +10,9 @@ import 'feed_video_state_provider.dart';
 import 'feed_videos_state_container.dart';
 import 'video_proxy_controller.dart';
 
+typedef ExposedBuilder = Widget Function(
+    BuildContext context, VideoProxyController videoProxyController);
+
 /// Item曝光上报
 /// 接收[FeedVideosStateContainer.offsetPublishStream]并计算Item自身曝光后上报至
 /// [FeedVideosStateContainer.acceptExposedAction]由[FeedVideosObserver]监听
@@ -18,11 +21,11 @@ class VideoExposedReport extends StatefulWidget {
   const VideoExposedReport({
     Key? key,
     required this.index,
-    required this.child,
+    required this.builder,
     this.debugLabel,
   }) : super(key: key);
   final int index;
-  final Widget child;
+  final ExposedBuilder builder;
   final String? debugLabel;
 
   @override
@@ -45,8 +48,6 @@ class _VideoExposedReportState extends State<VideoExposedReport> {
     offsetStream = container.offsetPublishStream
         .debounceTime(const Duration(milliseconds: 250))
         .listen((offset) => calculationExposed(offset));
-    // 初始化代理视频控制器
-    proxyController.init();
     super.didChangeDependencies();
   }
 
@@ -107,7 +108,6 @@ class _VideoExposedReportState extends State<VideoExposedReport> {
   @override
   void dispose() {
     offsetStream.cancel();
-    proxyController.dispose();
     super.dispose();
   }
 
@@ -116,6 +116,6 @@ class _VideoExposedReportState extends State<VideoExposedReport> {
     ServicesBinding.instance!.addPostFrameCallback((timeStamp) {
       getViewPortAndBox();
     });
-    return widget.child;
+    return widget.builder(context, proxyController);
   }
 }
