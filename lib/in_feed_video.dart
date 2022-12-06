@@ -7,3 +7,4 @@ export 'src/feed_videos_state_container.dart';
 export 'src/in_feed_videos.dart';
 export 'src/video_proxy_controller.dart';
 export 'src/video_state_report.dart';
+export 'src/abstract_video_controller.dart';
