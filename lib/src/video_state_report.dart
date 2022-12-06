@@ -103,7 +103,10 @@ class _VideoExposedReportState extends State<VideoExposedReport> {
     container.acceptExposedAction.add(widget.index);
   }
 
-  void onDismiss() {}
+  void onDismiss() {
+    // 消失时上报到队列由[FeedVideosController]消费
+    container.acceptDismissAction.add(widget.index);
+  }
 
   @override
   void dispose() {

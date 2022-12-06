@@ -54,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: InFeedVideos(
           proxyControllers: proxyControllers,
           child: ListView.builder(
+            padding: const EdgeInsets.only(top: 500),
             itemCount: proxyControllers.length,
             itemBuilder: (context, index) => Column(
               children: [
@@ -113,7 +114,7 @@ class _AeroBoxState extends State<AeroBox> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 600,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,

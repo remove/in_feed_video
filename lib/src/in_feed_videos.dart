@@ -1,9 +1,6 @@
 import 'package:flutter/widgets.dart';
-
-import 'feed_video_observe.dart';
-import 'feed_video_state_provider.dart';
-import 'feed_videos_state_container.dart';
-import 'video_proxy_controller.dart';
+import 'package:in_feed_video/in_feed_video.dart';
+import 'package:in_feed_video/src/abstract_video_controller.dart';
 
 class InFeedVideos extends StatefulWidget {
   const InFeedVideos({
@@ -12,11 +9,13 @@ class InFeedVideos extends StatefulWidget {
     required this.child,
     this.debounceTime = const Duration(milliseconds: 250),
     this.exposeFactor = 0.5,
+    this.videosController,
   }) : super(key: key);
   final List<VideoProxyController> proxyControllers;
   final Widget child;
   final Duration debounceTime;
   final double exposeFactor;
+  final AbstractVideosController? videosController;
 
   @override
   State<InFeedVideos> createState() => _InFeedVideosState();
@@ -31,6 +30,8 @@ class _InFeedVideosState extends State<InFeedVideos> {
       proxyControllers: widget.proxyControllers,
       debounceTime: widget.debounceTime,
       exposeFactor: widget.exposeFactor,
+      videosController: widget.videosController ??
+          DefaultBehaviorVideosController(players: widget.proxyControllers),
     );
     super.initState();
   }
