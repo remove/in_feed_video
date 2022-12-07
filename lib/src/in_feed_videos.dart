@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:in_feed_video/in_feed_video.dart';
-import 'package:in_feed_video/src/abstract_video_controller.dart';
 
 class InFeedVideos extends StatefulWidget {
   const InFeedVideos({

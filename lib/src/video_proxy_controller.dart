@@ -49,10 +49,10 @@ class VideoProxyController {
   Future<void> pause({bool reset = false}) async {
     if (!_prepared) return;
     await playerController.pause();
-    if (reset) await playerController.seekTo(Duration.zero);
+    if (reset) unawaited(playerController.seekTo(Duration.zero));
   }
 
-  Future<void> play(int index) async {
+  Future<void> play() async {
     await init();
     if (!_prepared) return;
     unawaited(playerController.play());
